@@ -8,15 +8,7 @@ import gurobipy as gp
 from gurobipy import GRB
 import multiprocessing
 
-# -----------------------
 # 1) Parser de instancias (formato clásico .fjs / .txt usado en benchmarks)
-# Formato esperado (por línea de JOB):
-# <num_ops>  <k1> (m1 p1) (m2 p2) ... <k2> (m1 p1) ...  ...
-# Primera línea: num_jobs num_machines [otros campos opcionales]
-# Ej: 3 5
-# 2 2 1 10 3 20  1 2 5
-# ...
-# -----------------------
 def parse_instance_file(filepath):
     """
     Retorna jobs_data en el formato que usa tu modelo:
@@ -46,10 +38,7 @@ def parse_instance_file(filepath):
             ops.append(machine_list)
         jobs.append(ops)
     return jobs
-
-# -----------------------
-# 2) Constructor del modelo (adaptado desde tu código)
-# -----------------------
+# 2) Constructor del modelo
 def build_fattahi_model(jobs_data, time_limit_seconds=3600, bigM=1000, threads=None):
     num_jobs = len(jobs_data)
     # construir sets
@@ -176,9 +165,7 @@ def build_fattahi_model(jobs_data, time_limit_seconds=3600, bigM=1000, threads=N
         'meta': {'num_jobs': num_jobs, 'num_machines': len(machines)}
     }
 
-# -----------------------
 # 3) Runner que itera instancias, ejecuta y guarda resultados
-# -----------------------
 def run_batch(instances_dir, out_csv='results_fattahi.csv', time_limit=3600, threads=None):
     # Buscar archivos .fjs, .txt (ajusta patrón según tus instancias)
     files = sorted(glob.glob(os.path.join(instances_dir, '*.fjs')) + glob.glob(os.path.join(instances_dir, '*.txt')))
@@ -239,9 +226,7 @@ def run_batch(instances_dir, out_csv='results_fattahi.csv', time_limit=3600, thr
             print("-> guardado resultado para", fname)
     print("\nBatch finalizado. Resultados en", out_csv)
 
-# -----------------------
 # 4) Main
-# -----------------------
 if __name__ == '__main__':
     instances_dir = r"C:\Users\danie\OneDrive\Documentos\Opti\fattahi"   # <- ajusta: carpeta donde pusiste las instancias descargadas
     out_csv = 'results_fattahi.csv'
