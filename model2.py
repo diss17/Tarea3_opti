@@ -1,4 +1,3 @@
-# run_fattahi_batch.py
 import os
 import glob
 import time
@@ -49,7 +48,7 @@ def build_fattahi_model(jobs_data, time_limit_seconds=3600, bigM=1000, threads=N
     total_ops = len(all_ops)
     positions = list(range(total_ops))
 
-    # --- Detectar y normalizar índices de máquinas (0-based o 1-based)
+    # Detectar y normalizar índices de máquinas (0-based o 1-based)
     # Extraemos min y max de índices tal como vienen en jobs_data
     all_machine_indices = [m for job in jobs_data for op in job for (m,_) in op]
     if not all_machine_indices:
@@ -165,7 +164,7 @@ def build_fattahi_model(jobs_data, time_limit_seconds=3600, bigM=1000, threads=N
         'meta': {'num_jobs': num_jobs, 'num_machines': len(machines)}
     }
 
-# 3) Runner que itera instancias, ejecuta y guarda resultados
+#3 Runner que itera instancias, ejecuta y guarda resultados
 def run_batch(instances_dir, out_csv='results_fattahi.csv', time_limit=3600, threads=None):
     # Buscar archivos .fjs, .txt (ajusta patrón según tus instancias)
     files = sorted(glob.glob(os.path.join(instances_dir, '*.fjs')) + glob.glob(os.path.join(instances_dir, '*.txt')))
@@ -228,7 +227,6 @@ def run_batch(instances_dir, out_csv='results_fattahi.csv', time_limit=3600, thr
 
 # 4) Main
 if __name__ == '__main__':
-    instances_dir = r"C:\Users\danie\OneDrive\Documentos\Opti\fattahi"   # <- ajusta: carpeta donde pusiste las instancias descargadas
+    instances_dir = r"C:\Users\danie\OneDrive\Documentos\Opti\fattahi" 
     out_csv = 'results_fattahi.csv'
-    # Ejecuta (1 hora por instancia)
     run_batch(instances_dir, out_csv=out_csv, time_limit=3600, threads=None)
